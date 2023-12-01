@@ -1,0 +1,27 @@
+trigger:
+  branches:
+    include:
+    - '*'
+  paths:
+    exclude:
+      - filenames.zip #path to ignore
+
+
+pool:
+  vmImage: 'windows-latest'
+
+
+stages:
+  - stage: BuildArtifacts
+    displayName: Build Artifacts
+    pool:
+          vmImage: 'windows-latest'
+    jobs:
+    - job: PublishFiles
+      displayName: Publish Files
+      steps:
+	    - task: PublishPipelineArtifact@1
+	    	name: PublishArtifactName
+	    	inputs:
+	    		targetPath: '$(build.artifactStagingDirectory)\fileName.zip'
+          ArtifactName: 'ArtifactName'
